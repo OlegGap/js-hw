@@ -1,42 +1,52 @@
 "use strict";
 
-const countPlase = +prompt("Сколько мест Вам нужно?");
+const countPlace = +prompt("Сколько мест Вам нужно?");
 
-let sharm = 15;
-let hurgada = 25;
-let taba = 6;
-let checkCountPlase = 
-  countPlase === +null                              //користувач нажав Cancel --> очень жаль
+const sharm = 15,
+      hurgada = 25,
+      taba = 6;
+
+
+const askFreePalce = (place, name) => {
+  let confirmPlace = confirm(`Есть ${place} свободних меcт в групу ${name}, Ви согласни?`);
+  return confirmPlace;
+}
+const confirmedCurort = (name) => {
+  alert(`Приятного путешествия в группе ${name}`);
+}
+
+let checkCountPlace = 
+  countPlace === +null                                //користувач нажав Cancel --> очень жаль
     ? alert("Нам очень жаль, приходите еще!")       
-    : Number.isNaN(countPlase) || countPlase <= 0   //введене значення не є числом або менше 0
+    : Number.isNaN(countPlace) || countPlace <= 0     //введене значення не є числом або менше 0 --> ошибка
     ? alert("Ошибка ввода")
-    : "good";                                       //в іншому випадку все добре, значення коректне
+    : "good";                                         //в іншому випадку все добре, значення коректне
 
-if (checkCountPlase === "good") {                     //значення коректне-->
-  if (countPlase <= Math.max(sharm, hurgada, taba)) { //введенне число менше-рівне за максимальне значення місць серед готелів--> 
-    let confirmPlase = false;                         //створими змінну: місце заброньовано користувачем
-    if (countPlase <= sharm) {                        //місць в першому готелі більше-рівно за введенне число--> Ви згідні 
-      confirmPlase = confirm(`Есть ${sharm} свободних меcт в групу Sharm, Ви согласни?`);//не згідні-->вихід 
-      if (confirmPlase) {                                                                //згідні-->Приємної подорожі 
-        alert("Приятного путешествия в группе Sharm");
+if (checkCountPlace === "good") {                     //значення коректне-->
+  if (countPlace <= Math.max(sharm, hurgada, taba)) { //введенне число менше-рівне за максимальне значення місць серед готелів--> 
+    let confirmPlace = false;                         //створими змінну-прапорець: місце заброньовано користувачем?
+    if (countPlace <= sharm) {                        //місць в першому готелі більше-рівно за введенне число--> Ви згідні 
+      confirmPlace = askFreePalce(sharm, `Sharm`);    //не згідні-->вихід 
+      if (confirmPlace) {                             //згідні-->Приємної подорожі 
+        confirmedCurort(`Sharm`);
       }
     }
-    if (!confirmPlase && countPlase <= hurgada) {
-      confirmPlase = confirm(`Есть ${hurgada} свободних меcт в групу Hurgada, Ви согласни?`);
-      if (confirmPlase) {
-        alert("Приятного путешествия в группе Hurgada");
+    if (!confirmPlace && countPlace <= hurgada) {
+      confirmPlace = askFreePalce(hurgada, `Hurgada`);
+      if (confirmPlace) {
+        confirmedCurort(`Hurgada`);
       }
     }
-    if (!confirmPlase && countPlase <= taba) {
-      confirmPlase = confirm(`Есть ${taba} свободних меcт в групу Taba, Ви согласни?`);
-      if (confirmPlase) {
-        alert("Приятного путешествия в группе Taba");
+    if (!confirmPlace && countPlace <= taba) {
+      confirmPlace = askFreePalce(taba, `Taba`);
+      if (confirmPlace) {
+        confirmedCurort(`Taba`);
       }
     }
-    if (!confirmPlase) {                             //місце не заброньовано-->шкода
+    if (!confirmPlace) {                             //місце не заброньовано--> очень жаль
       alert("Нам очень жаль, приходите еще!");
     }
-  } else {                                          //введенне число більше за максимальне значення місць серед готелів 
+  } else {                                           //введенне число більше за максимальне значення місць серед готелів 
     alert("Извините, столько мест нет ни в одной группе!");
   }
 }

@@ -1,5 +1,5 @@
 
-`use script`
+`use strict`
 
 let userInput;
 const numbers = [];
@@ -54,3 +54,4 @@ if(attempts === 0 && !confirm && pas!==null){        //спроби закінч
 }else if(pas===null){                                //нажато Cancel
   alert("Очень жаль!")
 }
+
