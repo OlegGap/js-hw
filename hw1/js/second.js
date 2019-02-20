@@ -16,7 +16,7 @@ const confirmedCurort = (name) => {
 }
 
 let checkCountPlace = 
-  countPlace === +null                                //користувач нажав Cancel --> очень жаль
+  countPlace === 0                                    //користувач нажав Cancel --> очень жаль
     ? alert("Нам очень жаль, приходите еще!")       
     : Number.isNaN(countPlace) || countPlace <= 0     //введене значення не є числом або менше 0 --> ошибка
     ? alert("Ошибка ввода")
