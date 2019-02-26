@@ -53,6 +53,8 @@ const isLoginValid = function(login) {   //перевірка чи aргумен
 };
 
 const isLoginUnique = function(allLogins, login) { // приймає масив наявних логінів і логін, перевіряє чи він не входить в цей масив 
+  // return allLogins.includes(login);             
+
   let unique = true;                               //дефолтне значення(логін унікальний)
   for (const value of allLogins) {
     if (value === login) {                         //логін співпадає з значенням в масиві?
