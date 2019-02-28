@@ -54,10 +54,12 @@ function Cashier(name, productDatabase) {
   };
   this.countTotalPrice = function(order) {     //приймає об'єкт список замовлення, рахує суму замовлення і повертає її
     let totalPrice = 0;
-    for (keyBase in this.productDatabase) {
-      for (keyOrder in order) {
-        if (keyBase === keyOrder) {
-          totalPrice += this.productDatabase[keyBase] * order[keyOrder];
+    const orderArr = Object.keys(order);
+    const productDatabaseArr = Object.keys(this.productDatabase);
+    for (let keyBase of productDatabaseArr) {
+      for (let keyOrder of orderArr) {
+        if (keyBase === keyOrder) {          
+          totalPrice += productDatabase[keyBase] * order[keyOrder];
           break;
         }
       }
