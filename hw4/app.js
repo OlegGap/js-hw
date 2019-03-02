@@ -50,7 +50,7 @@ function Cashier(name, productDatabase) {
   this.customerMoney = 0;
 
   this.getCustomerMoney = function(value) {    //примймає суму і передає її в поле "гроші Покупця" 
-    this.customerMoney = value;
+    return this.customerMoney = value;
   };
   this.countTotalPrice = function(order) {     //приймає об'єкт список замовлення, рахує суму замовлення і повертає її
     let totalPrice = 0;
