@@ -6,7 +6,6 @@
 */
 function isObjectEmpty(obj){
   const objArr = Object.keys(obj);
-  console.log(objArr);
   return objArr.length === 0;
 }
 // Вызовы функции для проверки

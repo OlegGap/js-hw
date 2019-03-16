@@ -25,10 +25,6 @@ const filterFromArray = function(arr) {
     }
   }
   return newArr;
-  //   console.log(arguments[1]);
-  //   console.log(arguments[2]);
-  //   console.log(arguments[3]);
-  //   console.log(arguments[4]);
 };
 
 // Вызовы функции для проверки

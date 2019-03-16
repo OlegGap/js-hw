@@ -187,21 +187,11 @@ console.log(getUsersByFriend(users, "Goldie Gentry")); // [ 'Elma Head', 'Sheree
  * повторяющихся скиллов и они должны быть отсортированы в алфавитном порядке
  */
 const getAllUniqueSkills = arr => {
-  let preElement;                   //змінна зберігає значення попереднього елемента в функіїї isNextUnique(element)
-  const isNextUnique = element => { //приймає елемент, якщо він співпадає з значенння попереднього елемента, повертає false, якщо ні - true
-    if (preElement === element) {
-      return false;
-    }
-    preElement = element;
-    return true;
-  };
-
   return arr
-    .reduce((allSkills, user) => allSkills.concat(user.skills), [])  //збираємо всі skills в один масив
-    .sort()
-    .filter(isNextUnique);
+    .reduce((allSkills, user) => allSkills.concat(user.skills), []) //збираємо всі skills в один масив
+    .filter((e, i, arr) => arr.indexOf(e) === i)                    //callback функція повертає true, коли індекс першого знайденого елемента по імені в масиві дорівнює поточному індексу елемента
+    .sort();
 };
-
 console.log(getAllUniqueSkills(users));
 // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
 
