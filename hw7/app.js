@@ -44,31 +44,33 @@ function createPostCard(post) {
   movie__image.classList.add("movie__image");
   movie__image.setAttribute("src", `${post.img}`);
   movie__image.setAttribute("alt", "movie image");
-  card.append(movie__image);
 
   const movie__body = document.createElement("div");
 
   const movie__title = document.createElement("h2");
   movie__title.classList.add("movie__title");
   movie__title.textContent = `${post.title}`;
-  movie__body.append(movie__title);
 
   const movie__description = document.createElement("p");
   movie__description.classList.add("movie__description");
   movie__description.textContent = `${post.text}`;
-  movie__body.append(movie__description);
 
   const movie__date = document.createElement("p");
   movie__date.classList.add("movie__date");
   movie__date.textContent = "Released: yyyy-mm-dd";
-  movie__body.append(movie__date);
 
   const movie__rating = document.createElement("p");
   movie__rating.classList.add("movie__rating");
   movie__rating.textContent = "Rating: 0.0";
-  movie__body.append(movie__rating);
 
-  card.append(movie__body);
+  movie__body.append(
+    movie__title,
+    movie__description,
+    movie__date,
+    movie__rating
+  );
+
+  card.append(movie__image, movie__body);
   return card;
 }
 
