@@ -86,7 +86,7 @@ class Stopwatch {
   }
   start() {
     this.startBtn.textContent = "Pause";
-    this.startMoment = moment(); //час першого запуску
+    this.startMoment = moment();    //час запуску
     this.intervalID = setInterval(() => {
       let currentMoment = moment(); //поточний момент
       this.time =
@@ -96,11 +96,9 @@ class Stopwatch {
   }
   pause() {
     this.startBtn.classList.remove("active");
-    console.log("stop");
-    this.lastTime = this.time; //збережемо час, який пройшов
+    this.lastTime = this.time;      //збережемо час, який пройшов
     this.startBtn.textContent = "Continue";
     clearInterval(this.intervalID); //зупинимо таймер
-    console.log("tyt");
   }
   lap() {
     const elem = document.createElement("li");
