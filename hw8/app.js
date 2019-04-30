@@ -1,4 +1,3 @@
-
 /*
   Создайте компонент галлереи изображений следующего вида.
   
@@ -130,7 +129,7 @@ class Gallery {
   }
 
   build() {
-    const fullview = document.createElement("div");  //створюємо блок з картинкою fullview
+    const fullview = document.createElement("div"); //створюємо блок з картинкою fullview
     fullview.classList.add("fullview");
     fullview.insertAdjacentHTML(
       "afterbegin",
@@ -140,35 +139,29 @@ class Gallery {
     );
     this.parentNode.append(fullview);
 
-    const preview = document.createElement("div");   //створюємо блок з картинками preview
-    preview.classList.add("preview");
-
-    const imgArr = []; 
-    this.items.map((el,idx) => {                          //створюэмо масив вузлів li 
-      const li = document.createElement("li");
-      li.insertAdjacentHTML(
-        "afterbegin",
-        `<img src=${el.preview} data-fullview=${el.fullview} alt=${el.alt}>`
-      );
-      if(idx==(this.defaultActiveItem-1)) li.firstChild.classList.add("img-active");//встановимо виділення дефолтної картинки
-      
-      return imgArr.push(li);
+    let list = this.items.map((el, idx) => {
+      return `<li> <img ${                                               //створюємо елемненти LI
+        idx == this.defaultActiveItem - 1 ? `class="img-active"` : ""    //додаэмо клас активносты для початковоъ картинки
+      }src=${el.preview} data-fullview=${el.fullview} alt=${el.alt}></li>`;
     });
-    preview.append(...imgArr);                     
-    this.parentNode.append(preview);
+    this.parentNode.insertAdjacentHTML(   //додаємо блок з картинками в основний блок
+      "beforeend",
+      `<ul class='preview'>` + list.join("") + `</ul>`
+    );
 
-
-    preview.addEventListener("click", this.handlePreviewClick);//івент кліку на одну з картинок
+    const preview = document.querySelector("ul");
+    preview.addEventListener("click", this.handlePreviewClick); //івент кліку на одну з картинок
   }
 
   handlePreviewClick({ target }) {
     if (target.nodeName !== "IMG") return;
 
-    const currentActiveLink = this.parentNode.querySelector(".img-active");//шукаэмо активний елемент
-    if (currentActiveLink) {                                              //якщо такий э - видаляэмо його клас
-      currentActiveLink.classList.remove("img-active");  
+    const currentActiveLink = this.parentNode.querySelector(".img-active"); //шукаэмо активний елемент
+    if (currentActiveLink) {
+      //якщо такий э - видаляэмо його клас
+      currentActiveLink.classList.remove("img-active");
     }
-    target.classList.add("img-active");                   //додаємо активність новому елементу
+    target.classList.add("img-active"); //додаємо активність новому елементу
 
     const fullImg = this.parentNode.querySelector(".fullview>img");
     fullImg.setAttribute("src", target.dataset.fullview); //вказуємо блоку з великою картинкою дані з активного елемента
