@@ -5,13 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>hw9</title>
+    <title>hw10</title>
   </head>
   <body>
-      <div class="wraper"></div>
-      <div class="wraper2"></div>
-      <div class="wraper3"></div>
-    <script src="./node_modules/moment/min/moment.min.js"></script>
+    <div class="container">
+    <div class="btn-container">
+      <form class="search-byid">
+        <input type="text" name="id" placeholder="Enter user ID">
+        <button class="mdc-btn" type="submit">Search user by ID</button>
+      </form>
+      <form class="add-user">
+        <input type="text" name="name" placeholder="Enter user name">
+        <input type="text" name="age" placeholder="Enter user age">
+        <button class="mdc-btn" type="submit">Add new user</button>
+      </form>
+      <form class="remove-byid">
+        <input type="id" name="id" placeholder="Enter user ID">
+        <button class="mdc-btn" type="submit">Delete user by ID</button>
+      </form>
+      <form class="update-byid">
+        <input type="id" name="id" placeholder="Enter user ID">
+        <input type="name" name="name" placeholder="Enter new user name">
+        <input type="age" name="age" placeholder="Enter new user age">
+        <button class="mdc-btn" type="submit">Update user</button>
+      </form>
+      <form class="show-users"><button class="mdc-btn">Show all users</button></form>
+    </div>
+    <div class="result"></div>
+  </div>
     <script src="app.js"></script>
   </body>
 </html>

@@ -1,29 +1,50 @@
-/* 
-  Напишите функцию getFormattedTime(time), которая 
-  получает time - кол-во миллисекунд и возвращает 
-  строку времени в формате xx:xx.x, 01:23.6, минуты:секунды.миллисекунды.
+/*
+  Написать функцию fetchUserData, которая использует
+  API_URL + текущее значение input для составления запроса.
   
-  Используйте возможности объекта Date для работы со временем.
+  Формат полного url таков:
+    https://api.github.com/users/имя-пользователя
+    
+  Документация по Git API:
+    https://developer.github.com/v3/
+    
+  С помощью fetch сделать запрос по составленому адресу. 
+  Обязательно обработать вариант с ошибкой запроса используя catch. 
   
-  Из миллисекунд нам интересен только разряд с сотнями,
-  то есть если сейчас 831мс то нам интересна исключительно цифра 8.
+  Результат запроса вывести в поле result в формате:
+    Avatar: аватартка 
+    Username: логин
+    Bio: описание профиля
+    Public repos: кол-во открытых репозиториев
+  
+  Все необходимые данные есть в ответе от API.
 */
 
-function getFormattedTime(time) {
-  const date = new Date();
-  date.setTime(time);
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
-  let milliseconds = date.getMilliseconds();
+const input = document.querySelector("input");
+const form = document.querySelector(".search-form");
+const result = document.querySelector(".result");
+const API_URL = "https://api.github.com/users/";
 
-  minutes = String(minutes).length === 1 ? `0${minutes}` : minutes;
-  seconds = String(seconds).length === 1 ? `0${seconds}` : seconds;
-  milliseconds = parseInt(milliseconds / 100);
-  return `${minutes}:${seconds}.${milliseconds}`;
+form.addEventListener("submit", fetchUserData);
+
+/*
+  @param {FormEvent} evt
+*/
+function fetchUserData(evt) {
+  evt.preventDefault();
+  fetchName(input.value);
 }
 
-console.log(getFormattedTime(1523621052858)); // 04:12.8
-
-console.log(getFormattedTime(1523621161159)); // 06:01.1
-
-console.log(getFormattedTime(1523621244239)); // 07:24.2
+function fetchName(name) {
+  fetch(API_URL + name)
+    .then(res => {
+      if (res.ok) return res.json();
+      throw new Error(`Error while fetching: ${response.statusText}`);
+    })
+    .then(res => {
+      result.innerHTML = `<img src="${res.avatar_url}"></img><li>Login: ${
+        res.login
+      }</li><li>bio: ${res.bio}</li><li>public repos: ${res.public_repos}</li>`;
+    })
+    .catch(e => console.error("Erroe: ", e));
+}

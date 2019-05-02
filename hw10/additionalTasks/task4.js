@@ -1,87 +1,54 @@
-/* 
-  Напишите скрипт, реализующий базовый функционал
-  таймера, запуск отсчета времени и сброс счетчика
-  в исходное состояние.
+/*
+  Документация API: https://jsonplaceholder.typicode.com/
+
+  Написать функцию getUserById, которая посылает запрос 
+  на получение информации о пользоватеьте с id (число) введенным в input. 
+  Не забывайте что значение input это строка.
+ 
+  Объект что придет в ответе используйте для вывода информации
+  о пользователе в элементе .result
   
-  Используйте возможности объекта Date для работы со временем.
-  
-  Создайте функцию startTimer, которая будет запускать
-  отсчет времени с момента ее нажатия, она вызывается 
-  при клике на кнопку с классом js-timer-start.
-  
-  Создайте функцию stopTimer, которая будет останавливать
-  счетчик, она вызывается при клике на кнопку с классом js-timer-stop.
-  
-  Используйте вспомогательную функцию updateClockface 
-  которая обновляет значение счетчика в интерфейсе. 
-  Для составления строки времени в формате xx:xx.x, 
-  исользуйте функцию getFormattedTime из задания номер 3.
-  
-  Подсказка: так как нам интересны исключительно сотни миллисекунд,
-      нет смысла выполнять пересчет времени чаще чем каждые 100мс.
+  Если пользователя с таким идентификатором в базе данных нет,
+  в элемент .result вывести строку "Ошибка! Пользователя с таким id не существует"
 */
 
-const clockface = document.querySelector(".js-clockface");
-const startBtn = document.querySelector(".js-timer-start");
-const stopBtn = document.querySelector(".js-timer-stop");
+const input = document.querySelector("input");
+const form = document.querySelector(".search-form");
+const result = document.querySelector(".result");
+const API_url = "https://jsonplaceholder.typicode.com/users/";
 
-startBtn.addEventListener("click", startTimer);
-let intervalID;
-let isCanWork = true;
-let startDate = new Date();
-function startTimer({ target }) {
-  setActiveBtn(target);
-  if (isCanWork) {
-    intervalID = setInterval(() => {
-      let curentDate = new Date();
-      updateClockface(clockface, curentDate.getTime() - startDate.getTime());
-    }, 100);
-  }
-  isCanWork = false;
+form.addEventListener("submit", getUserById);
+
+function getUserById(evt) {
+  evt.preventDefault();
+  fetchUser(input.value).then(makeViwe);
 }
-
-stopBtn.addEventListener("click", stopTimer);
-
-function stopTimer({ target }) {
-  setActiveBtn(target);
-  clearInterval(intervalID);
-  isCanWork = true;
+function fetchUser(id) {
+  return fetch(API_url + Number(id))
+    .then(res => {
+      if (res.ok) return res.json();
+      throw new Error("Такого користувача не існує");
+    })
+    .catch(e => e);
 }
-
-/*
- * Вспомогательные функции
- */
-
-/*
- * Обновляет поле счетчика новым значением при вызове
- * аргумент time это кол-во миллисекунд
- */
-function updateClockface(elem, time) {
-  function getFormattedTime(time) {
-    const date = new Date();
-    date.setTime(time);
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-    let milliseconds = date.getMilliseconds();
-
-    minutes = String(minutes).length === 1 ? `0${minutes}` : minutes;
-    seconds = String(seconds).length === 1 ? `0${seconds}` : seconds;
-    milliseconds = parseInt(milliseconds / 100);
-    return `${minutes}:${seconds}.${milliseconds}`;
+function makeViwe({ name, email, website, company }) {
+  try {
+    result.insertAdjacentHTML(
+      "afterbegin",
+      `
+      <tr scope="row">
+        <td>${name}</td>
+        <td>${email}</td>
+        <td>${website}</td>
+        <td>${company.name}</td>
+      </tr>
+    `
+    );
+  } catch (e) {
+    result.insertAdjacentHTML(
+      "afterbegin",
+      "<div>Такого користувача не існує</div>"
+    );
+    console.error("Такого id не існує");
   }
-  elem.textContent = getFormattedTime(time);
-}
-
-/*
- * Подсветка активной кнопки
- */
-function setActiveBtn(target) {
-  if (target.classList.contains("active")) {
-    return;
-  }
-
-  startBtn.classList.remove("active");
-  stopBtn.classList.remove("active");
-
-  target.classList.add("active");
 }

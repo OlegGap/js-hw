@@ -1,46 +1,50 @@
 /*
- * Есть массив цветов в hex-формате и кнопки Start и Stop.
- *
- * Напиши скрипт, который после нажатия кнопки Start, раз в секунду
- * меняет цвет фона body на случайное значение из массива. Используй
- * инлайн-стиль для изменения background-color.
- *
- * При нажатии на кнопку Stop, изменении цвета фона должно останавливаться.
- *
- * Учти, что на кнопку Start можно нажать бесконечное количество раз.
- * Сделай так, чтобы пока изменение темы запушено, кнопка Start была не активна.
- */
+  Написать функцию fetchCountryData, которая использует
+  API_URL + текущее значение input для составления запроса.
+  
+  Формат полного url таков:
+    https://restcountries.eu/rest/v2/name/имя-страны
+    
+  С помощью fetch сделать запрос по составленому адресу. 
+  Обязательно обработать вариант с ошибкой запроса используя catch. 
+  
+  Результат запроса вывести в поле result в формате:
+    Country name: имя страны
+    Capital: столица
+    Main currency: название денежной единицы
+    Flag: флаг страны
+  
+  Все необходимые данные есть в ответе от API.
+  
+  PS: при отправке формы перезагружается страница,
+  решите эту задачу вспомнив о том, как остановить
+  поведение по умолчанию.
+*/
 
-const colors = [
-  "#FFFFFF",
-  "#2196F3",
-  "#4CAF50",
-  "#FF9800",
-  "#009688",
-  "#795548"
-];
+const input = document.querySelector("input");
+const form = document.querySelector(".search-form");
+const result = document.querySelector(".result");
+const API_URL = "https://restcountries.eu/rest/v2/name/";
 
-const startBtn = document.querySelector('[data-action="start"]');
-const stopBtn = document.querySelector('[data-action="stop"]');
+form.addEventListener("submit", fetchCountryData);
 
-startBtn.addEventListener("click", hundleStartClick);
-let intervalID;
-let isCanWork = true;
-let curentColorNum = 0;
-function hundleStartClick({ target }) {
-  if (isCanWork) {
-    intervalID = setInterval(() => {
-      target.style.backgroundColor = `${colors[curentColorNum]}`;
-      curentColorNum++;
-      if (curentColorNum == colors.length) curentColorNum = 0;
-    }, 1000);
-  }
-  isCanWork = false;
+/*
+  @param {FormEvent} evt
+*/
+
+function fetchCountryData(evt) {
+  evt.preventDefault();
+  console.log(input.value);
+  fetchCountry(input.value);
 }
 
-stopBtn.addEventListener("click", hundleStopClick);
-
-function hundleStopClick() {
-  clearInterval(intervalID);
-  isCanWork = true;
+function fetchCountry(country) {
+  fetch(API_URL + country)
+    .then(res => res.json())
+    .then(res => {
+      result.innerHTML = `<div><li>${res[0].name}</li><li>${
+        res[0].capital
+      }</li><li>${res[0].cioc}</li><li>${res[0].flag}</li></div>`;
+    })
+    .catch(err => console.error("Error: " + err));
 }
