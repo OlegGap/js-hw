@@ -91,29 +91,30 @@ const laptops = [
   }
 ];
 
-const checkboxSize = document.querySelector(".checkbox-size");
+const inputs = document.querySelectorAll("input[type='checkbox']");
 const checkboxColor = document.querySelector(".checkbox-color");
 const checkboxYear = document.querySelector(".checkbox-year");
 const form = document.querySelector(".js-form");
-
+const cardsContainer = document.querySelector(".card");
 const source = document.querySelector("#template-container").innerHTML.trim();
 const template = Handlebars.compile(source);
+let markup = laptops.reduce((acc, el) => (acc += template(el)), ""); //виведе всі карточки при завантажені
+cardsContainer.innerHTML = markup;
 
 form.addEventListener("submit", formClickEvt);
 let filter;
 function formClickEvt(evt) {
   evt.preventDefault();
-  filter = takeChecked(evt.target);
-  const markup = laptops.reduce(laptopsFilter, "");
-  const cardsContainer = document.querySelector(".card");
+  filter = takeChecked(inputs);
+  markup = laptops.reduce(laptopsFilter, "");
   cardsContainer.innerHTML = markup;
 }
 
 function takeChecked(inputs) {
   const filter = { size: [], color: [], release_date: [] };
-  for (let i = 0; i < 9; i++) {
-    if (inputs[i].name === "size" && inputs[i].checked) {//записуємо в масив значення вибраного розміру
-      filter.size.push(inputs[i].value);          
+  Object.keys(inputs).forEach(i => {
+    if (inputs[i].name === "size" && inputs[i].checked) { //записуємо в масив значення вибраного розміру
+      filter.size.push(inputs[i].value);
     }
     if (inputs[i].name === "color" && inputs[i].checked) {
       filter.color.push(inputs[i].value);
@@ -121,16 +122,16 @@ function takeChecked(inputs) {
     if (inputs[i].name === "release_date" && inputs[i].checked) {
       filter.release_date.push(inputs[i].value);
     }
-  }
+  });
   return filter;
 }
 
 function laptopsFilter(acc, post) {
   if (
     (post.size == filter.size[0] || //якщо розмір в пості співпаде
-    post.size == filter.size[1] ||  //з вибраним розміро - пропускаємо(виводимо)
+    post.size == filter.size[1] || //з вибраним розміро - пропускаємо(виводимо)
       post.size == filter.size[2] ||
-      filter.size.length == 0) &&   //якщо нічого не вибрано з розділу SIZE
+      filter.size.length == 0) && //якщо нічого не вибрано з розділу SIZE
     (post.color == filter.color[0] ||
       post.color == filter.color[1] ||
       post.color == filter.color[2] ||
