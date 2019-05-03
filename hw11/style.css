@@ -1,0 +1,19 @@
+.card > img {
+  width: 300px;
+  height: auto;
+}
+.card > ul {
+  width: 300px;
+}
+.card {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.card-container {
+  height: 100%;
+  margin-left: 20px;
+  width: 40%;
+}

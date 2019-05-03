@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>hw11</title>
+  </head>
+  <body>
+    <!-- Разметка поста  -->
+    <template id="template-container">
+      <article class="post">
+        <h2 class="title">{{title}}</h2>
+        <p class="text">{{text}}</p>
+        {{#if favourite}}
+        <span class="fav-icon"></span>
+        {{/if}}
+      </article>
+
+    </template>
+    <!-- Контейнер в который рендерить -->
+    <section class="posts"></section>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
