@@ -122,7 +122,7 @@ function fetchGetImage(url) {
     key: '5cd40f3bec0e35c20a74cf61b9b1d52cacfe039b93914',
     q: url
   };
-  return fetch("http://api.linkpreview.net/?key=".concat(data.key, "&q=").concat(data.q)).then(function (res) {
+  return fetch("https://api.linkpreview.net/?key=".concat(data.key, "&q=").concat(data.q)).then(function (res) {
     return res.json();
   }).then(function (response) {
     return response.image;
@@ -153,34 +153,3 @@ function cardsViwer() {
   }, '');
   result.innerHTML = markup;
 }
-"use strict";
-
-var tryLocalStorage = function (w) {
-  if (!w) return;
-  var isActive = 'localStorage' in w;
-
-  var get = function get(key) {
-    try {
-      var serializedState = localStorage.getItem(key);
-      return serializedState === null ? undefined : JSON.parse(serializedState);
-    } catch (err) {
-      console.error('Get state error: ', err);
-    }
-  };
-
-  var set = function set(key, value) {
-    try {
-      var serializedState = JSON.stringify(value);
-      localStorage.setItem(key, serializedState);
-    } catch (err) {
-      console.error('Set state error: ', err);
-    }
-  };
-
-  var publicAPI = {
-    isActive: isActive,
-    get: get,
-    set: set
-  };
-  return publicAPI;
-}(window);

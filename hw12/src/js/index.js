@@ -120,7 +120,7 @@ function fetchGetImage(url) {
     q: url,
   };
 
-  return fetch(`http://api.linkpreview.net/?key=${data.key}&q=${data.q}`)
+  return fetch(`https://api.linkpreview.net/?key=${data.key}&q=${data.q}`)
     .then(res => res.json())
     .then(response => response.image)
     .catch(e=>console.error(e))
