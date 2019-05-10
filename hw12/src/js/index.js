@@ -81,21 +81,21 @@ let cards = [
 if (tryLocalStorage.get('cardsData')) {
   cards = tryLocalStorage.get('cardsData');
 }
-
-const form = document.querySelector('.js-form');
-let input = document.querySelector('input');
+const elements = {
+  form: document.querySelector('.js-form'),
+  input: document.querySelector('input'),
+  result: document.querySelector('.result-list'),
+  source: document.querySelector('#template-container').innerHTML.trim(),
+};
 let inputValue;
-const result = document.querySelector('.result-list');
-const source = document.querySelector('#template-container').innerHTML.trim();
-const template = Handlebars.compile(source);
-let markup;
+const template = Handlebars.compile(elements.source);
 cardsViwer();
 
-form.addEventListener('submit', formSubmitClick);
+elements.form.addEventListener('submit', formSubmitClick);
 
 function formSubmitClick(evt) {
-  inputValue = input.value;
-  input.value = '';
+  inputValue = elements.input.value;
+  elements.input.value = '';
   evt.preventDefault();
   addNewItem();
 }
@@ -123,15 +123,15 @@ function fetchGetImage(url) {
   return fetch(`https://api.linkpreview.net/?key=${data.key}&q=${data.q}`)
     .then(res => res.json())
     .then(response => response.image)
-    .catch(e=>console.error(e))
+    .catch(e => console.error(e));
 }
 
-result.addEventListener('click', deleteResultClick);
+elements.result.addEventListener('click', deleteResultClick);
 
-function deleteResultClick({ target }) {
-  if (target.nodeName === 'BUTTON') {
+function deleteResultClick( evt ) {
+  if (evt.target.nodeName === 'BUTTON') {
     cards = cards.filter(
-      elem => target.parentNode.firstChild.innerHTML != elem.url,
+      elem => evt.target.parentNode.firstChild.innerHTML != elem.url,
     );
     cardsViwer();
     tryLocalStorage.set('cardsData', cards);
@@ -141,6 +141,6 @@ function deleteResultClick({ target }) {
 }
 
 function cardsViwer() {
-  markup = cards.reduce((acc, el) => (acc += template(el)), '');
-  result.innerHTML = markup;
+  const markup = cards.reduce((acc, el) => (acc += template(el)), '');
+  elements.result.innerHTML = markup;
 }

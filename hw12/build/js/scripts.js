@@ -80,19 +80,20 @@ if (tryLocalStorage.get('cardsData')) {
   cards = tryLocalStorage.get('cardsData');
 }
 
-var form = document.querySelector('.js-form');
-var input = document.querySelector('input');
+var elements = {
+  form: document.querySelector('.js-form'),
+  input: document.querySelector('input'),
+  result: document.querySelector('.result-list'),
+  source: document.querySelector('#template-container').innerHTML.trim()
+};
 var inputValue;
-var result = document.querySelector('.result-list');
-var source = document.querySelector('#template-container').innerHTML.trim();
-var template = Handlebars.compile(source);
-var markup;
+var template = Handlebars.compile(elements.source);
 cardsViwer();
-form.addEventListener('submit', formSubmitClick);
+elements.form.addEventListener('submit', formSubmitClick);
 
 function formSubmitClick(evt) {
-  inputValue = input.value;
-  input.value = '';
+  inputValue = elements.input.value;
+  elements.input.value = '';
   evt.preventDefault();
   addNewItem();
 }
@@ -131,14 +132,12 @@ function fetchGetImage(url) {
   });
 }
 
-result.addEventListener('click', deleteResultClick);
+elements.result.addEventListener('click', deleteResultClick);
 
-function deleteResultClick(_ref) {
-  var target = _ref.target;
-
-  if (target.nodeName === 'BUTTON') {
+function deleteResultClick(evt) {
+  if (evt.target.nodeName === 'BUTTON') {
     cards = cards.filter(function (elem) {
-      return target.parentNode.firstChild.innerHTML != elem.url;
+      return evt.target.parentNode.firstChild.innerHTML != elem.url;
     });
     cardsViwer();
     tryLocalStorage.set('cardsData', cards);
@@ -148,8 +147,8 @@ function deleteResultClick(_ref) {
 }
 
 function cardsViwer() {
-  markup = cards.reduce(function (acc, el) {
+  var markup = cards.reduce(function (acc, el) {
     return acc += template(el);
   }, '');
-  result.innerHTML = markup;
+  elements.result.innerHTML = markup;
 }
