@@ -101,6 +101,7 @@ const template = Handlebars.compile(source);
 let markup = laptops.reduce((acc, el) => (acc += template(el)), ""); //виведе всі карточки при завантажені
 cardsContainer.innerHTML = markup;
 
+
 form.addEventListener("submit", formClickEvt);
 let filter;
 function formClickEvt(evt) {
@@ -145,3 +146,29 @@ function laptopsFilter(acc, post) {
   }
   return acc;
 }
+
+
+// function getArrayCheckedInputs() {
+//   return Array.from(
+//     form.querySelectorAll('input[type="checkbox"]:checked')
+//   );
+// };
+
+// form.addEventListener('submit', formClickEvt);
+// function formClickEvt(evt){
+//   evt.preventDefault();
+//   let arr = getArrayCheckedInputs();
+//   console.log(arr);
+//  arr = arr.reduce((acc, elem) => {
+//   acc[elem.name]
+//     ? acc[elem.name].push(elem.value)
+//     : (acc[elem.name] = [elem.value]);
+//   return acc;
+// }, {});
+// console.log(arr);
+// const res = Object.keys(arr).reduce(
+//   (a, e) => a.filter(elem => arr[e].includes("" + elem[e])),
+//   laptops
+// );
+// console.log(res);
+// }
