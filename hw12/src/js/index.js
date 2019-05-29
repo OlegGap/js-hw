@@ -89,7 +89,7 @@ const elements = {
 };
 let inputValue;
 const template = Handlebars.compile(elements.source);
-cardsViwer();
+cardsViewer();
 
 elements.form.addEventListener('submit', formSubmitClick);
 
@@ -108,7 +108,7 @@ function addNewItem() {
     alert('Не вірний формат!');
   } else {
     fetchGetImage(inputValue).then(res => {
-      cards.push({ url: inputValue, 'logo-url': res }), cardsViwer();
+      cards.push({ url: inputValue, 'logo-url': res }), cardsViewer();
       tryLocalStorage.set('cardsData', cards);
     });
   }
@@ -133,14 +133,14 @@ function deleteResultClick( evt ) {
     cards = cards.filter(
       elem => evt.target.parentNode.firstChild.innerHTML != elem.url,
     );
-    cardsViwer();
+    cardsViewer();
     tryLocalStorage.set('cardsData', cards);
   } else {
     return;
   }
 }
 
-function cardsViwer() {
+function cardsViewer() {
   const markup = cards.reduce((acc, el) => (acc += template(el)), '');
   elements.result.innerHTML = markup;
 }

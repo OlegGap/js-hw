@@ -88,7 +88,7 @@ var elements = {
 };
 var inputValue;
 var template = Handlebars.compile(elements.source);
-cardsViwer();
+cardsViewer();
 elements.form.addEventListener('submit', formSubmitClick);
 
 function formSubmitClick(evt) {
@@ -112,7 +112,7 @@ function addNewItem() {
       cards.push({
         url: inputValue,
         'logo-url': res
-      }), cardsViwer();
+      }), cardsViewer();
       tryLocalStorage.set('cardsData', cards);
     });
   }
@@ -139,14 +139,14 @@ function deleteResultClick(evt) {
     cards = cards.filter(function (elem) {
       return evt.target.parentNode.firstChild.innerHTML != elem.url;
     });
-    cardsViwer();
+    cardsViewer();
     tryLocalStorage.set('cardsData', cards);
   } else {
     return;
   }
 }
 
-function cardsViwer() {
+function cardsViewer() {
   var markup = cards.reduce(function (acc, el) {
     return acc += template(el);
   }, '');
