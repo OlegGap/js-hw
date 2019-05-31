@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: { main: './src/app.js' },
+  entry: { main: './src/index.js' },
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'build.js'
