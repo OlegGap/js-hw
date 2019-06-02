@@ -1,0 +1,19 @@
+{
+  "name": "hw14",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch './src'"
+  },
+  "author": "Oleg <hnapovskiy20@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.8.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-jest": "^24.8.0"
+  }
+}

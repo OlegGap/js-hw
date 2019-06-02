@@ -4,7 +4,7 @@ export default class View extends EventEmitter {
   constructor() {
     super();
 
-       this.form = document.querySelector(".js-form"),
+      this.form = document.querySelector(".js-form"),
       this.input = document.querySelector("input"),
       this.result = document.querySelector(".result-list"),
       this.source = document
