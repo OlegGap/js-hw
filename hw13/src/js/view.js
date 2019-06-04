@@ -5,8 +5,9 @@ export default class View extends EventEmitter {
     super();
 
       this.form = document.querySelector(".js-form"),
-      this.input = document.querySelector("input"),
+      this.input = document.querySelector(".input-js"),
       this.result = document.querySelector(".result-list"),
+      this.popup= document.querySelector('dialog');
       this.source = document
         .querySelector("#template-container")
         .innerHTML.trim(),
@@ -15,6 +16,13 @@ export default class View extends EventEmitter {
 
     this.form.addEventListener("submit", this.formSubmitClick.bind(this));
     this.result.addEventListener("click", this.deleteResultClick.bind(this));
+
+    document.querySelector('#show').onclick = function() {
+      this.popup.showModal();
+    };
+    document.querySelector('#close').onclick = function() {
+      this.popup.close();
+    };
   }
 
   formSubmitClick(evt) {

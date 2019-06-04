@@ -1,3 +1,4 @@
+import * as localStor from "../services/localStor";
 export default class Model {
   constructor() {
     this.cards = [
@@ -9,12 +10,14 @@ export default class Model {
   }
 
   updateLocStor() {
-    if (JSON.parse(localStorage.getItem("cardsData"))) {
-      this.cards = JSON.parse(localStorage.getItem("cardsData"));
+    console.log(localStor.get("cardsData"));
+    if (localStor.get("cardsData")) {
+      this.cards = localStor.get("cardsData");
     }
   }
 
-  isNotCorect(val) {    //якщо не коректне введення поверне "тип" помилки
+  isNotCorect(val) {
+    //якщо не коректне введення поверне "тип" помилки
     const checkURL = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
     if (!checkURL.test(val)) {
       return "notCorect";
@@ -32,7 +35,7 @@ export default class Model {
       .then(res => res.json())
       .then(response => {
         this.cards.push({ url: inputValue, "logo-url": response.image });
-        localStorage.setItem("cardsData", JSON.stringify(this.cards));
+        localStor.set("cardsData", this.cards);
         return this.cards;
       })
       .catch(e => console.error(e));
@@ -40,7 +43,7 @@ export default class Model {
 
   removeCard(curentURL) {
     this.cards = this.cards.filter(elem => curentURL != elem.url);
-    localStorage.setItem("cardsData", JSON.stringify(this.cards));
+    localStor.set("cardsData", this.cards);
     return this.cards;
   }
 }

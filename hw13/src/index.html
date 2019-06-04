@@ -11,7 +11,7 @@
 <body>
   <div class="container">
     <form class="form js-form">
-      <input type="text" name="url" placeholder="Enter new URL">
+      <input class="input-js" type="text" name="url" placeholder="Enter new URL">
       <button class="btn" type="submit">ADD URL-card</button>
     </form>
     <template id='template-container'>
@@ -24,6 +24,12 @@
     <div class="result-list">
     </div>
   </div>
+  <dialog>
+    <p>Это окно, которое сделано на html5 и javascript</p>
+    <button id="close">Закрыть</button>
+  </dialog>
+  <button id="show">Открыть всплывающее окно!</button>
+  
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   <script src="main.js"></script>
