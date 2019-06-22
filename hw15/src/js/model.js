@@ -25,7 +25,7 @@ export default class Model {
   }
   addCard(inputValue) {
     const data = {
-      key: "5cd40f3bec0e35c20a74cf61b9b1d52cacfe039b93914",
+      key: process.env.FREELOGODESIGN_API_KEY,
       q: inputValue
     };
     return fetch(`https://api.linkpreview.net/?key=${data.key}&q=${data.q}`)
