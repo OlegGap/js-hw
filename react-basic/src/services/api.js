@@ -13,7 +13,6 @@ export const updateNote = note => {
   return axios.post(`/notes/${note.id}`, note).then(res => res.data);
 };
 export const deleteNote = id => {
-    console.log(id);
   return axios
     .delete(`/notes/${id}`)
     .then(res => (res.status === 200 ? id : null));

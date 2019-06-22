@@ -1,3 +1,6 @@
+import * as localStorage from "../services/localStorage";
+import axios from 'axios'
+
 export default class Model {
   constructor() {
     this.cards = [
@@ -8,39 +11,39 @@ export default class Model {
     ];
   }
 
-  updateLocStor() {
-    if (JSON.parse(localStorage.getItem("cardsData"))) {
-      this.cards = JSON.parse(localStorage.getItem("cardsData"));
+  updateLocalStorage() {
+    if (localStorage.get("cardsData")) {
+      this.cards = localStorage.get("cardsData");
     }
   }
 
-  isNotCorect(val) {    //якщо не коректне введення поверне "тип" помилки
+  static isCorrectUrl(val) {
     const checkURL = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-    if (!checkURL.test(val)) {
-      return "notCorect";
-    } else if (this.cards.some(elem => val === elem.url)) {
-      return "haveIt";
-    }
-    return false;
+    return checkURL.test(val);
   }
+
+  isUniqueUrl(val) {
+    return !this.cards.some(elem => val === elem.url);
+  }
+  
   addCard(inputValue) {
     const data = {
       key: process.env.FREELOGODESIGN_API_KEY,
       q: inputValue
     };
-    return fetch(`https://api.linkpreview.net/?key=${data.key}&q=${data.q}`)
-      .then(res => res.json())
+    return axios.get(`https://api.linkpreview.net/?key=${data.key}&q=${data.q}`)
+      .then(result => result.data)
       .then(response => {
         this.cards.push({ url: inputValue, "logo-url": response.image });
-        localStorage.setItem("cardsData", JSON.stringify(this.cards));
+        localStorage.set("cardsData", this.cards);
         return this.cards;
       })
       .catch(e => console.error(e));
   }
 
-  removeCard(curentURL) {
-    this.cards = this.cards.filter(elem => curentURL != elem.url);
-    localStorage.setItem("cardsData", JSON.stringify(this.cards));
+  removeCard(currentURL) {
+    this.cards = this.cards.filter(element => currentURL !== element.url);
+    localStorage.set("cardsData", this.cards);
     return this.cards;
   }
 }

@@ -10,7 +10,6 @@ export default class Model {
   }
 
   updateLocStor() {
-    console.log(localStor.get("cardsData"));
     if (localStor.get("cardsData")) {
       this.cards = localStor.get("cardsData");
     }
