@@ -1,4 +1,3 @@
-import Model from "./model";
 
 export default class Controller {
     constructor(model, view) {
@@ -13,15 +12,15 @@ export default class Controller {
 
     addCard(input) {
         let error = null;
-        if (!Model.isCorrectUrl(input)) {
+        if (!this.model.isCorrectUrl(input)) {
             error = "Невірний формат!";
         } else if (!this.model.isUniqueUrl(input)) {
             error = "Така закладка вже існує!";
         }
-        if (error === null) {
-            this.model.addCard(input).then(cards => this.view.addCard(cards));
-        } else {
+        if (error !== null) {
             this.view.addCard(error);
+        } else {
+            this.model.addCard(input).then(cards => this.view.addCard(cards));
         }
     }
 

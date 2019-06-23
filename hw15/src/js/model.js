@@ -17,7 +17,7 @@ export default class Model {
     }
   }
 
-  static isCorrectUrl(val) {
+  isCorrectUrl(val) {
     const checkURL = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
     return checkURL.test(val);
   }
