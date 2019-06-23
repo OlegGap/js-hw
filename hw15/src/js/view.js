@@ -38,7 +38,7 @@ export default class View extends EventEmitter {
         if (typeof cards == "string") {
             this.popup.childNodes[1].innerHTML = cards;
             this.popup.show();
-        } else if((typeof cards == "object")){
+        } else if ((typeof cards == "object")) {
             this.updateView(cards);
         }
     }
@@ -50,7 +50,7 @@ export default class View extends EventEmitter {
 
     deleteResultClick(evt) {
         if (evt.target.nodeName === "BUTTON") {
-            //передамо посилання, яке хочемо видалити
+            //передамо елеменет, яке хочемо видалити
             this.emit(
                 "remove",
                 evt.target.parentNode.firstChild.nextElementSibling.innerHTML

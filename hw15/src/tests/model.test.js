@@ -30,10 +30,10 @@ describe("Method 'add card'", () => {
 });
 describe("Method 'isCorrectUrl'", () => {
   test("Should return false if value is not correct", () => {
-    return expect(Model.isCorrectUrl("anth")).toBeFalsy();
+    return expect(model.isCorrectUrl("anth")).toBeFalsy();
   });
   test("should return true if value is correct", () => {
-    return expect(Model.isCorrectUrl(url)).toBeTruthy();
+    return expect(model.isCorrectUrl(url)).toBeTruthy();
   });
 });
 describe('Method "isUniqueUrl"', () => {
